@@ -7,15 +7,15 @@
         :key="list.id"
       >
         <h2 class="font-medium mb-2 text-teal-800">{{ list.title }}</h2>
-        <div
-          class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer"
-          v-for="card in list.cards"
-          :key="card.id"
-        >
-          <span class="text-sm font-medium text-teal-800">{{ card.title }}</span>
-          <p class="text-xs text-teal-600">{{ card.description }}</p>
-        </div>
-      <!-- we do it this way because a nested for loop is necessary since it's a nested data structure-->
+        <!-- we do it this way because a nested for loop is necessary since it's a nested data structure-->
+        <Draggable :list="list.cards" group="cards">
+          <template #item="{ element }">
+            <div class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer">
+              <span class="text-sm font-medium text-teal-800">{{ element.title }}</span>
+              <p class="text-xs text-teal-600">{{ element.description }}</p>
+            </div>
+          </template>
+        </Draggable>
         <button
           class="cursor-pointer rounded w-full bg-transparent text-teal-800 hover:bg-teal-100 p-2 text-left mt-2 text-sm font-medium"
         >
@@ -27,9 +27,10 @@
 </template>
 
 <script setup lang="ts">
+import Draggable from 'vuedraggable'
 import { reactive } from 'vue'
 //im using reactive here because this is a complex data structure
-//and i wont reassign this so i dont need the reactivity of ref
+//and i wont reassign this so i dont need ref's reassignability
 //the course said this was more performance effective but didnt go into detail
 //so i looked it up myself :D
 
