@@ -18,11 +18,12 @@
         </Draggable>
         <button
           class="cursor-pointer rounded w-full bg-transparent text-teal-800 hover:bg-teal-100 p-2 text-left mt-2 text-sm font-medium"
+          @click="openDialog"
         >
           + Add Card
         </button>
       </div>
-      <DialogComponent />
+      <DialogComponent :isOpen="isDialogOpen" @close="closeDialog" />
     </div>
   </main>
 </template>
@@ -31,7 +32,7 @@
 import DialogComponent from '@/components/DialogComponent.vue'
 import type { List } from '@/types'
 import Draggable from 'vuedraggable'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 //im using reactive here because this is a complex data structure
 //and i wont reassign this so i dont need ref's reassignability
 //the course said this was more performance effective but didnt go into detail
@@ -60,4 +61,14 @@ const lists = reactive<List[]>([
     cards: [{ id: 5, title: 'Task 5', description: 'Description for Task 5' }],
   },
 ])
+
+const isDialogOpen = ref(false)
+
+const openDialog = () => {
+  isDialogOpen.value = true
+}
+
+const closeDialog = () => {
+  isDialogOpen.value = false
+}
 </script>
