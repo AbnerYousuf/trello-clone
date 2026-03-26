@@ -8,7 +8,7 @@
       >
         <h2 class="font-medium mb-2 text-teal-800">{{ list.title }}</h2>
         <!-- we do it this way because a nested for loop is necessary since it's a nested data structure-->
-        <Draggable :list="list.cards" group="cards">
+        <Draggable :list="list.cards" group="cards" item-key="id">
           <template #item="{ element }">
             <div class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer">
               <span class="text-sm font-medium text-teal-800">{{ element.title }}</span>

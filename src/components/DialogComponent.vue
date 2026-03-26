@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpen" @keydown.esc="emit('close')" tabindex="0">
+  <div v-if="isOpen" @keydown.esc="emit('close')" tabindex="0" ref="dialogElement">
     <div
       class="fixed inset-0 flex items-center justify-center backdrop-blur-xs"
       role="dialog"
@@ -41,6 +41,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
+import { nextTick } from 'vue';
 
 const props = defineProps<{
   isOpen: boolean
@@ -55,13 +57,18 @@ const descriptionInput = ref<HTMLTextAreaElement | null>(null)
 
 watch(
   () => props.isOpen,
-  (isOpen) => {
+  async (isOpen) => {
     if (isOpen) {
+      await nextTick() // Wait for the DOM to update before trying to focus
       // Focus the title input when the dialog opens
-      setTimeout(() => {
-        titleInput.value?.focus()
-      }, 0)
+      titleInput.value?.focus()
+      activate() // Activate focus trap when dialog opens
+    } else {
+      deactivate() // Deactivate focus trap when dialog closes
     }
   },
 )
+
+const dialogElement = ref<HTMLDivElement | null>(null)
+const { activate, deactivate } = useFocusTrap(dialogElement)
 </script>
