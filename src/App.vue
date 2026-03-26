@@ -22,29 +22,20 @@
           + Add Card
         </button>
       </div>
+      <DialogComponent />
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
+import DialogComponent from '@/components/DialogComponent.vue'
+import type { List } from '@/types'
 import Draggable from 'vuedraggable'
 import { reactive } from 'vue'
 //im using reactive here because this is a complex data structure
 //and i wont reassign this so i dont need ref's reassignability
 //the course said this was more performance effective but didnt go into detail
 //so i looked it up myself :D
-
-interface Card {
-  id: number
-  title: string
-  description: string
-}
-
-interface List {
-  id: number
-  title: string
-  cards: Card[]
-}
 
 const lists = reactive<List[]>([
   {
