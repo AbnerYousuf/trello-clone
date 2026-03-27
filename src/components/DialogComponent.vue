@@ -70,6 +70,12 @@ watch(
   () => props.isOpen,
   async (isOpen) => {
     if (isOpen) {
+      // Sync card data when dialog opens
+      if (props.card) {
+        localCard.value = { ...props.card }
+      } else {
+        localCard.value = { id: 0, title: '', description: '' }
+      }
       await nextTick() // Wait for the DOM to update before trying to focus
       // Focus the title input when the dialog opens
       titleInput.value?.focus()
