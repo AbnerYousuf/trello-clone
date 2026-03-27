@@ -11,11 +11,18 @@
         <Draggable :list="list.cards" group="cards" item-key="id">
           <template #item="{ element }">
             <div
-              class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer"
-              @click="openDialog(listIndex, element)"
+              class="bg-teal-100 p-2 my-2 rounded shadow flex justify-between items-center group"
             >
-              <span class="text-sm font-medium text-teal-800">{{ element.title }}</span>
-              <p class="text-xs text-teal-600">{{ element.description }}</p>
+              <div class="flex-1 cursor-pointer" @click="openDialog(listIndex, element)">
+                <span class="text-sm font-medium text-teal-800">{{ element.title }}</span>
+                <p class="text-xs text-teal-600">{{ element.description }}</p>
+              </div>
+              <button
+                @click="deleteCard(listIndex, element.id)"
+                class="ml-2 text-teal-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                ×
+              </button>
             </div>
           </template>
         </Draggable>
@@ -108,5 +115,14 @@ const saveCard = (card: Card) => {
     }
   }
   closeDialog()
+}
+
+const deleteCard = (listIndex: number, cardId: number) => {
+  const list = lists[listIndex]
+  if (!list) return
+  const cardIndex = list.cards.findIndex((c) => c.id === cardId)
+  if (cardIndex !== -1) {
+    list.cards.splice(cardIndex, 1)
+  }
 }
 </script>
