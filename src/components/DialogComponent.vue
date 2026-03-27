@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
-import { nextTick } from 'vue';
+import { nextTick } from 'vue'
 import type { Card } from '@/types'
 
 const titleInput = ref<HTMLInputElement | null>(null)
@@ -89,6 +89,6 @@ watch(
       localCard.value = { id: 0, title: '', description: '' } // Reset for adding new card
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>

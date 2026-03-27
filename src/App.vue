@@ -10,7 +10,10 @@
         <!-- we do it this way because a nested for loop is necessary since it's a nested data structure-->
         <Draggable :list="list.cards" group="cards" item-key="id">
           <template #item="{ element }">
-            <div class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer" @click="openDialog(listIndex, element)">
+            <div
+              class="bg-teal-100 p-2 my-2 rounded shadow cursor-pointer"
+              @click="openDialog(listIndex, element)"
+            >
               <span class="text-sm font-medium text-teal-800">{{ element.title }}</span>
               <p class="text-xs text-teal-600">{{ element.description }}</p>
             </div>
@@ -92,19 +95,14 @@ const saveCard = (card: Card) => {
   }
   const list = lists[editingListId.value]
   if (!list) return
-  
+
   if (dialogMode.value === 'add') {
     //adding
-    const newId = Math.max(
-      ...lists.flatMap(list => list.cards.map(c => c.id))
-    )
-    list.cards.push(
-      {...card, id: newId}
-    )
-  }
-  else {
+    const newId = Math.max(...lists.flatMap((list) => list.cards.map((c) => c.id)))
+    list.cards.push({ ...card, id: newId })
+  } else {
     //editing
-    const cardIndex = list.cards.findIndex(c => c.id === card.id)
+    const cardIndex = list.cards.findIndex((c) => c.id === card.id)
     if (cardIndex !== -1) {
       list.cards[cardIndex] = card
     }
